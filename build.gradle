@@ -24,8 +24,6 @@ dependencies {
     implementation 'org.modelmapper:modelmapper:3.1.0'
     implementation 'org.springframework.boot:spring-boot-devtools'
 
-    runtimeOnly 'mysql:mysql-connector-java'
-
     compileOnly 'com.h2database:h2'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
