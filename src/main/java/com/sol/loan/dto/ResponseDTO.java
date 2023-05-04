@@ -2,7 +2,6 @@ package com.sol.loan.dto;
 
 import com.sol.loan.exception.BaseException;
 import lombok.*;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
 
