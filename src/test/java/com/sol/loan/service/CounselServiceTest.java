@@ -126,4 +126,20 @@ class CounselServiceTest {
 
         Assertions.assertThrows(BaseException.class, () -> counselService.update(findId, request));
     }
+
+    @Test
+    void Should_DeleteCounselEntity_When_RequestDeleteExistCounselInfo() {
+        Long targetId = 1L;
+
+        Counsel entity = Counsel.builder()
+                .counselId(1L)
+                .build();
+
+        when(counselRepository.save(any(Counsel.class))).thenReturn(entity);
+        when(counselRepository.findById(targetId)).thenReturn(Optional.ofNullable(entity));
+
+        counselService.delete(targetId);
+
+        assertThat(entity.getIsDeleted()).isSameAs(true);
+    }
 }
