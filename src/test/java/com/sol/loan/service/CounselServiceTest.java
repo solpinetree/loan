@@ -64,7 +64,7 @@ class CounselServiceTest {
         assertThat(actual.getName()).isSameAs(entity.getName());
     }
 
-    @DisplayName("대출 상담 조회 기능 테스트 - 레코드 O")
+    @DisplayName("대출 상담 조회 기능 테스트 - 레코드 o")
     @Test
     void Should_ReturnResponseOfExistCounselEntity_When_RequestExistCounselId() {
         Long findId = 1L;
@@ -88,5 +88,42 @@ class CounselServiceTest {
         when(counselRepository.findById(findId)).thenThrow(new BaseException(ResultType.SYSTEM_ERROR));
 
         Assertions.assertThrows(BaseException.class, () -> counselService.get(findId));
+    }
+
+    @DisplayName("대출 상담 수정 기능 테스트 - 레코드 o")
+    @Test
+    void Should_ReturnUpdatedResponseOfExistCounselEntity_When_RequestUpdateExistCounselInfo() {
+        Long findId = 1L;
+
+        Counsel entity = Counsel.builder()
+                .counselId(1L)
+                .name("Member Kim")
+                .build();
+
+        Request request = Request.builder()
+                .name("Member Kang")
+                .build();
+
+        when(counselRepository.save(any(Counsel.class))).thenReturn(entity);
+        when(counselRepository.findById(findId)).thenReturn(Optional.ofNullable(entity));
+
+        Response actual = counselService.update(findId, request);
+
+        assertThat(actual.getCounselId()).isSameAs(findId);
+        assertThat(actual.getName()).isSameAs(request.getName());
+    }
+
+    @DisplayName("대출 상담 수정 기능 테스트 - 레코드 x")
+    @Test
+    void Should_ThrowException_When_RequestUpdateExistCounselInfo() {
+        Long findId = 2L;
+
+        Request request = Request.builder()
+                .name("Member Kang")
+                .build();
+
+        when(counselRepository.findById(findId)).thenThrow(new BaseException(ResultType.SYSTEM_ERROR));
+
+        Assertions.assertThrows(BaseException.class, () -> counselService.update(findId, request));
     }
 }
