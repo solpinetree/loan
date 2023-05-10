@@ -104,8 +104,8 @@ class CounselServiceTest {
                 .name("Member Kang")
                 .build();
 
-        when(counselRepository.save(any(Counsel.class))).thenReturn(entity);
         when(counselRepository.findById(findId)).thenReturn(Optional.ofNullable(entity));
+        when(counselRepository.save(any(Counsel.class))).thenReturn(entity);
 
         Response actual = counselService.update(findId, request);
 
